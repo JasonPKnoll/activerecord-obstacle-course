@@ -20,6 +20,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    orders_of_user_3 = Order.where(user_id: [@user_3.id])
     # ------------------------------------------------------------
 
     # Expectation
@@ -39,6 +40,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    orders = Order.order(amount: :desc)
     # ------------------------------------------------------------
 
     # Expectation
@@ -58,6 +60,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    orders = Order.order(:amount)
     # ------------------------------------------------------------
 
     # Expectation
@@ -77,6 +80,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    items = Item.where.not(id: [@item_2.id, @item_5.id, @item_6.id])
     # ------------------------------------------------------------
 
     # Expectation
@@ -93,7 +97,14 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    grouped_items = order.items.order(:name)
+    grouped_items = Order.find(@order_3.id).items.order("items.name")
+    grouped_items = Order.find(@order_3.id).items.merge(Item.order(:name))
+    grouped_items = Item.joins(:orders).where(orders: {id: @order_3.id}).order(:name)
     # ------------------------------------------------------------
+
+    # merchants, items, invoice items
+    # merchants name, revunue (unit price * quantity)
 
     # Expectation
     expect(grouped_items).to eq(expected_result)
@@ -108,6 +119,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    names = Item.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -145,6 +157,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    names = Order.joins(:items).pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation

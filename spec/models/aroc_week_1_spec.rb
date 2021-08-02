@@ -140,6 +140,7 @@ describe 'ActiveRecord Obstacle Course, Week 1' do
     # Solution goes here
     orders_less_than_550 = Order.where("amount <?", 550)
     orders_less_than_550 = Order.where("amount < 550")
+    orders_less_than_550 = Order.where(amount: [Float::INFINITY..549])
     # ------------------------------------------------------------
 
     # Expectation
