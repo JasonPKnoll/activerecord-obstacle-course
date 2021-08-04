@@ -28,6 +28,18 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    # require "pry"; binding.pry
+    # 5589
+    users = User.joins(:orders).joins(:order_items).select("users.name").where("item_id =?", @item_8.id).order("name").distinct.pluck("name")
+
+    users = User.joins(orders: :order_items)
+                .select("users.name")
+                .where("item_id =?", @item_8.id)
+                .order("name")
+                .distinct
+                .pluck("name")
+
+      #Notes - item_id is on order_items
     # ------------------------------------------------------------
 
     # Expectation
@@ -43,6 +55,12 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    names = Item.joins(:orders)
+                .select("name")
+                .where(orders: {id: Order.last.id})
+                .order("name desc")
+                .pluck("name")
+
     # ------------------------------------------------------------
 
     # Expectation
@@ -66,7 +84,8 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    # Solution goes here 1839
+    items_for_user_3_third_order = Order.where(user_id: @user_3.id).third.items.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -80,6 +99,7 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    average = Order.average(:amount)
     # ------------------------------------------------------------
 
     # Expectation
@@ -97,6 +117,7 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
+    average = Order.where(user_id: @user_3.id).average(:amount)
     # ------------------------------------------------------------
 
     # Expectation

@@ -100,7 +100,9 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     grouped_items = order.items.order(:name)
     grouped_items = Order.find(@order_3.id).items.order("items.name")
     grouped_items = Order.find(@order_3.id).items.merge(Item.order(:name))
+
     grouped_items = Item.joins(:orders).where(orders: {id: @order_3.id}).order(:name)
+    grouped_items = Item.joins(:order_items).where(order_items: {order_id: @order_3.id}).order(:name)
     # ------------------------------------------------------------
 
     # merchants, items, invoice items
@@ -158,6 +160,8 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------ Using ActiveRecord ----------------------
     # Solution goes here
     names = Order.joins(:items).pluck(:name)
+    names = Item.joins(:orders).pluck(:name)
+    names = Order.joins(:items).pluck("items.name")
     # ------------------------------------------------------------
 
     # Expectation
